@@ -3,8 +3,15 @@ from django.conf import settings
 from django.utils import timezone
 
 
+class Post_category(models.Model):
+    category_name = models.CharField(max_length=60, verbose_name='Категориянын аты')
+
+    def __str__(self):
+        return self.category_name
+
 class Post(models.Model):
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    category = models.ForeignKey(Post_category, on_delete=models.CASCADE, verbose_name='Категория')
     title = models.CharField(max_length=200)
     text = models.TextField()
     image = models.ImageField(upload_to='image/%Y/%m/%d/')
